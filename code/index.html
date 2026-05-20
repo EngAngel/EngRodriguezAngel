@@ -226,7 +226,7 @@
     .cert-name { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.4; }
     .cert-date { font-size: 0.78rem; color: var(--muted); }
     .cert-badge {
-      width: 36px; height: 36px; border-radius: 8px;
+      display: inline-block; width: 36px; height: 36px; border-radius: 8px;
       margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center;
       font-size: 1.2rem;
     }
@@ -313,7 +313,7 @@
     </div>
     <div class="hero-avatar">
       <div class="avatar-ring">
-        <img src="code/src/foto.jpg" alt="Santiago Rodríguez Ángel"
+        <img src="src/foto.jpg" alt="Santiago Rodríguez Ángel"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
         <div class="avatar-placeholder" style="display:none">SR</div>
       </div>
@@ -434,6 +434,7 @@
           <span class="soft-tag">Planificación de Proyectos</span>
           <span class="soft-tag">Disciplina</span>
         </div>
+        <br/>
         <h3 style="margin-top:1.5rem">Metodologías</h3>
         <div class="soft-skills">
           <span class="soft-tag">Enterprise Design Thinking</span>
@@ -615,11 +616,13 @@
 </footer>
 
 <script>
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        // Animate skill bars
         entry.target.querySelectorAll('.skill-fill').forEach(bar => {
           bar.style.width = bar.dataset.width + '%';
         });
@@ -628,6 +631,7 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
+  // Also trigger skills on their section
   const skillsSection = document.getElementById('skills');
   const skillObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -640,6 +644,7 @@
   }, { threshold: 0.2 });
   skillObserver.observe(skillsSection);
 
+  // Active nav highlight
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
