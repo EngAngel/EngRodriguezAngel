@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Santiago Rodríguez Ángel — Software Engineer</title>
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --dark: #1a2535;
+      --card: #1e2d42;
+      --accent: #f5a623;
+      --accent2: #3b82f6;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #2d3f55;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(13,27,42,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(59,130,246,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 20%, rgba(245,166,35,0.06) 0%, transparent 50%);
+    }
+    .hero-inner {
+      position: relative; max-width: 900px; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-text h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 0.5rem;
+    }
+    .hero-text h1 span { color: var(--accent); }
+    .hero-role {
+      font-size: 1.1rem; color: var(--accent2);
+      font-weight: 500; margin-bottom: 1.2rem; letter-spacing: 0.04em;
+    }
+    .hero-bio {
+      color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.65rem 1.5rem; border-radius: 8px; font-size: 0.9rem;
+      font-weight: 600; text-decoration: none; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent); color: #0d1b2a;
+      box-shadow: 0 4px 20px rgba(245,166,35,0.3);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .hero-avatar {
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    }
+    .avatar-ring {
+      width: 200px; height: 200px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      padding: 3px; box-shadow: 0 0 40px rgba(245,166,35,0.2);
+    }
+    .avatar-ring img {
+      width: 100%; height: 100%; border-radius: 50%;
+      object-fit: cover; background: var(--card);
+    }
+    .avatar-placeholder {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: var(--card); display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; font-weight: 800; color: var(--accent);
+    }
+    .status-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.82rem; color: var(--muted);
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+      box-shadow: 0 0 6px #22c55e; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    .social-links { display: flex; gap: 1rem; }
+    .social-link {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--card); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: var(--muted); font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+    .social-link:hover { background: var(--accent); color: var(--navy); border-color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-title {
+      font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem;
+    }
+    .section-title span { color: var(--accent); }
+    .section-divider {
+      width: 50px; height: 3px; background: var(--accent); margin-bottom: 3rem; border-radius: 2px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--dark); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+    }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .info-list li {
+      display: flex; gap: 0.8rem; align-items: flex-start;
+      font-size: 0.9rem; color: var(--muted);
+    }
+    .info-list li strong { color: var(--text); min-width: 90px; }
+    .info-list a { color: var(--accent2); text-decoration: none; }
+    .info-list a:hover { text-decoration: underline; }
+    .interest-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag {
+      padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.78rem;
+      background: rgba(59,130,246,0.1); color: var(--accent2);
+      border: 1px solid rgba(59,130,246,0.2); font-weight: 500;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .skills-category h3 {
+      font-size: 1rem; color: var(--accent); text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 1.5rem; font-weight: 600;
+    }
+    .skill-item { margin-bottom: 1.2rem; }
+    .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+    .skill-name { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    .skill-pct { font-size: 0.8rem; color: var(--muted); }
+    .skill-bar {
+      height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .soft-skills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .soft-tag {
+      padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.82rem;
+      background: var(--card); border: 1px solid var(--border); color: var(--text);
+    }
+
+    /* ── TIMELINE ── */
+    #experience { background: var(--dark); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-dot {
+      position: absolute; left: -1.65rem; top: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--navy);
+      box-shadow: 0 0 10px rgba(245,166,35,0.4);
+    }
+    .timeline-date {
+      font-size: 0.8rem; color: var(--accent2); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem;
+    }
+    .timeline-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.1rem; }
+    .timeline-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .timeline-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .timeline-list li {
+      font-size: 0.88rem; color: var(--muted); padding-left: 1rem; position: relative;
+    }
+    .timeline-list li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
+
+    /* ── CERTS ── */
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .cert-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.4rem; transition: transform 0.2s, border-color 0.2s;
+    }
+    .cert-card:hover { transform: translateY(-3px); border-color: var(--accent2); }
+    .cert-issuer {
+      font-size: 0.75rem; color: var(--accent2); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+    }
+    .cert-name { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.4; }
+    .cert-date { font-size: 0.78rem; color: var(--muted); }
+    .cert-badge {
+      display: inline-block; width: 36px; height: 36px; border-radius: 8px;
+      margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .badge-ibm { background: rgba(59,130,246,0.15); }
+    .badge-netzun { background: rgba(245,166,35,0.15); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--dark); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-item {
+      display: flex; gap: 1rem; align-items: center;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.2rem; text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 8px; background: rgba(245,166,35,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.1rem; }
+    .contact-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+    .contact-cta {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem; text-align: center;
+    }
+    .contact-cta h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+    .contact-cta p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.82rem;
+    }
+    footer span { color: var(--accent); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-avatar { order: -1; }
+      .hero-cta { justify-content: center; }
+      .social-links { justify-content: center; }
+      .about-grid, .skills-grid, .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">SR.</a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#skills">Habilidades</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#certifications">Certificaciones</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-role">Software Engineer</p>
+      <h1>Santiago<br /><span>Rodríguez</span><br />Ángel</h1>
+      <p class="hero-bio">
+        Estudiante de Ingeniería de Software apasionado por la Inteligencia Artificial,
+        la Ciberseguridad y la innovación tecnológica. Siempre buscando nuevos retos.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Contáctame</a>
+        <a href="#skills" class="btn btn-secondary">Ver habilidades</a>
+      </div>
+    </div>
+    <div class="hero-avatar">
+      <div class="avatar-ring">
+        <img src="foto.jpg" alt="Santiago Rodríguez Ángel"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="avatar-placeholder" style="display:none">SR</div>
+      </div>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        Disponible para oportunidades
+      </div>
+      <div class="social-links">
+        <a href="https://linkedin.com/in/santiago-rodriguez-angel-a1999b334" target="_blank" class="social-link" title="LinkedIn">in</a>
+        <a href="https://github.com/EngAngel" target="_blank" class="social-link" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
+          </svg>
+        </a>
+        <a href="mailto:ing.santiagorodriguezangel@gmail.com" class="social-link" title="Email">✉</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <h2 class="section-title">Sobre <span>mí</span></h2>
+    <div class="section-divider"></div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>
+          Soy estudiante de Ingeniería de Software en séptimo semestre en la
+          <strong>Universidad Manuela Beltrán</strong>, con participación activa en
+          semilleros de investigación. Me apasionan los desafíos técnicos y el
+          aprendizaje continuo.
+        </p>
+        <p>
+          Cuento con experiencia en el <strong>Servicio Militar en la Armada de
+          Colombia</strong>, donde fortalecí el liderazgo, la disciplina y la toma
+          de decisiones bajo presión. Certificado por <strong>IBM</strong> en
+          Enterprise Design Thinking y con especializaciones en Python, Django,
+          Web y SQL.
+        </p>
+        <div class="interest-tags">
+          <span class="tag">Inteligencia Artificial</span>
+          <span class="tag">Arquitectura de Software</span>
+          <span class="tag">Ciberseguridad</span>
+          <span class="tag">Data Science</span>
+          <span class="tag">Innovación Tecnológica</span>
+        </div>
+      </div>
+      <ul class="info-list">
+        <li><strong>Ubicación:</strong> Bogotá D.C., Colombia</li>
+        <li><strong>Universidad:</strong> Manuela Beltrán</li>
+        <li><strong>Semestre:</strong> 7mo (Graduación 2026)</li>
+        <li><strong>Email:</strong>
+          <a href="mailto:ing.santiagorodriguezangel@gmail.com">ing.santiagorodriguezangel<br/>@gmail.com</a>
+        </li>
+        <li><strong>LinkedIn:</strong>
+          <a href="https://linkedin.com/in/santiago-rodriguez-angel-a1999b334" target="_blank">santiago-rodriguez-angel</a>
+        </li>
+        <li><strong>GitHub:</strong>
+          <a href="https://github.com/EngAngel" target="_blank">EngAngel</a>
+        </li>
+        <li><strong>Idiomas:</strong> Español (Nativo), Inglés (B1)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <h2 class="section-title">Habilidades <span>técnicas</span></h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid reveal">
+      <div class="skills-category">
+        <h3>Hard Skills</h3>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Python & Django</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">SQL</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Análisis de Datos</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Power BI</span><span class="skill-pct">65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">UX Design</span><span class="skill-pct">65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Linux / Windows</span><span class="skill-pct">72%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="72"></div></div>
+        </div>
+      </div>
+      <div class="skills-category">
+        <h3>Soft Skills</h3>
+        <div class="soft-skills">
+          <span class="soft-tag">Liderazgo</span>
+          <span class="soft-tag">Trabajo en Equipo</span>
+          <span class="soft-tag">Comunicación</span>
+          <span class="soft-tag">Resolución de Problemas</span>
+          <span class="soft-tag">Adaptabilidad</span>
+          <span class="soft-tag">Trabajo Bajo Presión</span>
+          <span class="soft-tag">Planificación de Proyectos</span>
+          <span class="soft-tag">Disciplina</span>
+        </div>
+        <br/>
+        <h3 style="margin-top:1.5rem">Metodologías</h3>
+        <div class="soft-skills">
+          <span class="soft-tag">Enterprise Design Thinking</span>
+          <span class="soft-tag">Semilleros de Investigación</span>
+          <span class="soft-tag">Agile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE & EDUCATION -->
+<section id="experience">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem" class="reveal">
+      <div>
+        <h2 class="section-title">Experiencia <span>laboral</span></h2>
+        <div class="section-divider"></div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-date">Nov. 2020 — Nov. 2021</p>
+            <h3 class="timeline-title">Servicio Militar Obligatorio</h3>
+            <p class="timeline-sub">Armada de la República de Colombia · Corozal, Sucre</p>
+            <ul class="timeline-list">
+              <li>Operaciones logísticas bajo estrictos protocolos institucionales.</li>
+              <li>Liderazgo de equipos en situaciones de alta presión.</li>
+              <li>Comunicación asertiva y resolución de conflictos.</li>
+              <li>Adaptación a entornos de alta exigencia y disciplina.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title">Educación <span>&amp; Formación</span></h2>
+        <div class="section-divider"></div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-date">2022 — 2026 (en curso)</p>
+            <h3 class="timeline-title">Ingeniería de Software</h3>
+            <p class="timeline-sub">Universidad Manuela Beltrán · Bogotá D.C.</p>
+            <ul class="timeline-list">
+              <li>7mo semestre activo.</li>
+              <li>Participación en semilleros de investigación.</li>
+              <li>Análisis de datos y desarrollo de software.</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-date">En curso</p>
+            <h3 class="timeline-title">Inglés — Nivel B1</h3>
+            <p class="timeline-sub">Centro Colombo Americano · Bogotá D.C.</p>
+            <ul class="timeline-list">
+              <li>B1 certificado (2017), cursando B1.1.</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-date">2018</p>
+            <h3 class="timeline-title">Bachiller Académico</h3>
+            <p class="timeline-sub">Liceo de Cervantes El Retiro · Bogotá D.C.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <h2 class="section-title">Certificaciones <span>&amp; Cursos</span></h2>
+    <div class="section-divider"></div>
+    <div class="certs-grid reveal">
+      <div class="cert-card">
+        <div class="cert-badge badge-ibm">🏅</div>
+        <p class="cert-issuer">IBM</p>
+        <p class="cert-name">Enterprise Design Thinking Practitioner</p>
+        <p class="cert-date">Feb. 2025</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge badge-ibm">🤖</div>
+        <p class="cert-issuer">IBM</p>
+        <p class="cert-name">Enterprise Design Thinking – Team Essentials for AI</p>
+        <p class="cert-date">Feb. 2025</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge badge-netzun">🐍</div>
+        <p class="cert-issuer">Netzun</p>
+        <p class="cert-name">Especialización en Programación Python y Django</p>
+        <p class="cert-date">Abr. 2025</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge badge-netzun">🌐</div>
+        <p class="cert-issuer">Netzun</p>
+        <p class="cert-name">Especialización en Programación Web</p>
+        <p class="cert-date">Abr. 2025</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge badge-netzun">🎨</div>
+        <p class="cert-issuer">Netzun</p>
+        <p class="cert-name">Especialización en Diseño UX</p>
+        <p class="cert-date">Abr. 2025</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge badge-netzun">🗄️</div>
+        <p class="cert-issuer">Netzun</p>
+        <p class="cert-name">Especialización en SQL</p>
+        <p class="cert-date">Abr. 2025</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <h2 class="section-title">¿Hablamos? <span>Contáctame</span></h2>
+    <div class="section-divider"></div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <a href="mailto:ing.santiagorodriguezangel@gmail.com" class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <p class="contact-label">Email</p>
+            <p class="contact-value">ing.santiagorodriguezangel@gmail.com</p>
+          </div>
+        </a>
+        <a href="tel:+573057727513" class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <p class="contact-label">Teléfono</p>
+            <p class="contact-value">+57 305 772 7513</p>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/santiago-rodriguez-angel-a1999b334" target="_blank" class="contact-item">
+          <div class="contact-icon" style="font-size:1rem;font-weight:700;color:#0a66c2">in</div>
+          <div>
+            <p class="contact-label">LinkedIn</p>
+            <p class="contact-value">santiago-rodriguez-angel</p>
+          </div>
+        </a>
+        <a href="https://github.com/EngAngel" target="_blank" class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="contact-label">GitHub</p>
+            <p class="contact-value">github.com/EngAngel</p>
+          </div>
+        </a>
+        <div class="contact-item" style="cursor:default">
+          <div class="contact-icon">📍</div>
+          <div>
+            <p class="contact-label">Ubicación</p>
+            <p class="contact-value">Bogotá D.C., Colombia</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <h3>¿Tienes una oportunidad?</h3>
+        <p>
+          Estoy abierto a prácticas, proyectos freelance, o cualquier reto
+          que me permita seguir aprendiendo y creando impacto con la tecnología.
+        </p>
+        <a href="mailto:ing.santiagorodriguezangel@gmail.com" class="btn btn-primary">Enviar mensaje</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Diseñado y desarrollado por <span>Santiago Rodríguez Ángel</span> · 2025</p>
+  <p style="margin-top:0.3rem;font-size:0.75rem">Software Engineer · Bogotá, Colombia</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate skill bars
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Also trigger skills on their section
+  const skillsSection = document.getElementById('skills');
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  skillObserver.observe(skillsSection);
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
